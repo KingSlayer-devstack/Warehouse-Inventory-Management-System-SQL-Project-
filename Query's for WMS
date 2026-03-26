@@ -1,0 +1,31 @@
+Query 1 — Current Inventory
+
+SELECT p.product_name, i.quantity, i.location
+FROM Products p
+JOIN Inventory i ON p.product_id = i.product_id;
+
+Query 2 — Low Stock Alert
+
+SELECT p.product_name, i.quantity
+FROM Products p
+JOIN Inventory i ON p.product_id = i.product_id
+WHERE i.quantity < 10;
+
+Query 3 — Total Movement per Product
+
+SELECT product_id, SUM(quantity) AS total_moved
+FROM Movements
+GROUP BY product_id;
+
+Query 4 — Recent Movements
+
+SELECT *
+FROM Movements
+ORDER BY movement_date DESC;
+
+Query 5 — Total Stock by Category
+
+SELECT p.category, SUM(i.quantity) AS total_stock
+FROM Products p
+JOIN Inventory i ON p.product_id = i.product_id
+GROUP BY p.category;
