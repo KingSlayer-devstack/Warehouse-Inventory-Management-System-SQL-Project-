@@ -126,6 +126,7 @@ Expand the system to simulate a real WMS
 🛠 Technologies Used
 SQL (SQL Server / MySQL compatible)
 GitHub for version control
+
 👤 Author
 
 João Vitor Moura Pinheiro
