@@ -1,11 +1,14 @@
--- Create Products table
+DROP TABLE IF EXISTS Movements;
+DROP TABLE IF EXISTS Inventory;
+DROP TABLE IF EXISTS Products;
+
 CREATE TABLE Products (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(100),
     category VARCHAR(50)
 );
 
--- Create Inventory table
+
 CREATE TABLE Inventory (
     product_id INT,
     quantity INT,
@@ -13,7 +16,6 @@ CREATE TABLE Inventory (
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
--- Create Movements table
 CREATE TABLE Movements (
     movement_id INT PRIMARY KEY,
     product_id INT,
@@ -22,21 +24,21 @@ CREATE TABLE Movements (
     movement_date DATE,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
--- Insert Products
+
 INSERT INTO Products VALUES
 (1, 'Laptop', 'Electronics'),
 (2, 'Mouse', 'Electronics'),
 (3, 'Chair', 'Furniture'),
 (4, 'Desk', 'Furniture');
 
--- Insert Inventory
+
 INSERT INTO Inventory VALUES
 (1, 15, 'A1'),
 (2, 8, 'A2'),
 (3, 20, 'B1'),
 (4, 5, 'B2');
 
--- Insert Movements
+
 INSERT INTO Movements VALUES
 (1, 1, 'IN', 10, '2024-01-01'),
 (2, 1, 'OUT', 5, '2024-01-05'),
