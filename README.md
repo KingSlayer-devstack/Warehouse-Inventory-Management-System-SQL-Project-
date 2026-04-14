@@ -1,133 +1,125 @@
 # Warehouse Inventory Management System (SQL Project)
 
-## 📌 Overview
-This project simulates a basic Warehouse Management System (WMS) using SQL.  
-It was inspired by my work experience in logistics, where I observed challenges related to inventory control, stock accuracy, and organization.
+## Overview
+This project simulates a simple Warehouse Management System (WMS) using SQL.
 
-The system is designed to organize product data, track stock levels, and analyze inventory movements using simple SQL queries.
+It was inspired by my real work experience in logistics operations, where I observed recurring problems related to inventory control, stock accuracy, product movement, and warehouse organization. Through this project, I began translating those operational challenges into a structured, data-driven system.
 
----
+The goal is not to build a complete enterprise WMS, but to demonstrate how SQL and relational database design can be used to model real warehouse problems and support better inventory visibility.
 
-## 🎯 Problem Statement
-During my experience working in warehouse operations, I observed frequent issues such as:
+## Problem Statement
+During my experience working in warehouse environments, I observed common operational issues such as:
 
-- Misplaced products  
-- Inaccurate stock counts  
-- Lack of structured inventory tracking  
+- misplaced products
+- inaccurate stock counts
+- weak inventory visibility
+- lack of structured movement tracking
 
-These problems can lead to operational inefficiencies and financial losses.  
-This project was created to simulate a simple data-driven system that helps monitor inventory and identify potential issues.
+These problems can reduce efficiency, create stock inconsistencies, and generate financial losses. This project was created to simulate a basic inventory system that helps organize warehouse data and identify some of those issues through SQL.
 
----
+## Project Objective
+The system was designed to:
 
-## 🧱 Database Structure
+- organize product and inventory data
+- track stock levels and warehouse locations
+- record inventory movements (IN / OUT)
+- support simple inventory analysis using SQL queries
 
+This project reflects my transition from logistics operations to data analysis, using technology to better understand and solve warehouse inefficiencies.
+
+## Database Structure
 The database is composed of three main tables:
 
 ### 1. Products
 Stores product information.
+
 - `product_id`
 - `product_name`
 - `category`
 
 ### 2. Inventory
 Tracks current stock levels and locations.
+
 - `product_id`
 - `quantity`
 - `location`
 
 ### 3. Movements
-Records inventory changes (incoming and outgoing).
+Records inventory changes over time.
+
 - `movement_id`
 - `product_id`
-- `movement_type` (IN / OUT)
+- `movement_type` (`IN` / `OUT`)
 - `quantity`
 - `movement_date`
 
----
+## How to Run the Project
+1. Open your SQL environment  
+   Examples: SQL Server, MySQL, or another SQL-compatible tool.
 
-## ⚙️ How to Run the Project
+2. Run the file:  
+   `warehouse.sql`  
+   This creates the tables and inserts sample data.
 
-1. Open your SQL environment (SQL Server, MySQL, etc.)
-2. Run the file:
-   - `warehouse.sql` → creates tables and inserts data
-3. Run:
-   - `queries.sql` → executes example queries
+3. Run the file:  
+   `queries.sql`  
+   This executes the example analysis queries.
 
----
+## Example Queries
 
-## 💻 Example Queries
-
-### 🔎 Check Current Inventory
+### Current Inventory
 ```sql
 SELECT p.product_name, i.quantity, i.location
 FROM Products p
 JOIN Inventory i ON p.product_id = i.product_id;
 
 ```
-Find Low Stock Products 
-```
-SELECT p.product_name, i.quantity
-FROM Products p
-JOIN Inventory i ON p.product_id = i.product_id
-WHERE i.quantity < 10;
-```
-Total Movement per Product
-```
-SELECT product_id, SUM(quantity) AS total_moved
-FROM Movements
-GROUP BY product_id;
-
-```
-Recent Movements
-```
-SELECT *
-FROM Movements
-ORDER BY movement_date DESC;
-
-```
-Total Stock by Category
-```
-SELECT p.category, SUM(i.quantity) AS total_stock
-FROM Products p
-JOIN Inventory i ON p.product_id = i.product_id
-GROUP BY p.category;
-
-```
-📊 Insights
+Insights
 
 Using this system, it is possible to:
 
-Identify products with low stock levels
-Monitor inventory movement (IN / OUT)
-Track warehouse activity over time
-Analyze stock distribution by category
+identify products with low stock levels
+monitor inventory movement over time
+track warehouse activity more clearly
+analyze stock distribution by category
 
-These insights can help improve organization and reduce inventory errors.
+These are simple examples, but they reflect the type of operational visibility that is important in real logistics environments.
 
-🧠 What I Learned
+What I Learned
 
 Through this project, I developed skills in:
 
-Designing relational databases
-Writing SQL queries for data analysis
-Applying data concepts to real-world logistics problems
+designing relational databases
+writing SQL queries for inventory analysis
+structuring data around real logistics problems
+applying technical learning to practical warehouse scenarios
 
-This project helped me understand how structured data can improve operational efficiency.
+More importantly, this project helped me connect my operational background with my growing interest in data analytics.
 
-🚀 Future Improvements
+Professional Context
 
-In the future, I would like to:
+This project was influenced by my experience in logistics environments such as Portobello, Natura & Co, and Mercado Livre. Working in those settings helped me understand how inventory accuracy, product flow, and warehouse organization directly affect operational performance.
 
-Add more advanced queries and automation
-Implement data validation rules
-Create dashboards using Power BI
-Expand the system to simulate a real WMS
-🛠 Technologies Used
-SQL (SQL Server / MySQL compatible)
+That experience motivated me to start learning SQL and to build simple systems that reflect real warehouse challenges I have seen in practice.
+
+Future Improvements
+
+In the future, I would like to improve this project by:
+
+adding more advanced analytical queries
+implementing validation rules and stronger constraints
+creating SQL views for stock alerts and inventory summaries
+expanding the dataset to simulate larger warehouse activity
+connecting the project to dashboards in Power BI
+Technologies Used
+SQL
+Relational database design
 GitHub for version control
-
-👤 Author
+Author
 
 João Vitor Moura Pinheiro
-Aspiring Data Analyst with a background in logistics operations.
+Aspiring Data Analyst with a background in logistics operations
+
+LinkedIn: www.linkedin.com/in/kingslayer-devstack
+
+Email: joaovitormourapinheiro@gmail.com
