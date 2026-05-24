@@ -1,31 +1,77 @@
-Query 1 — Current Inventory
+Query 1 - Current Inventory Overview
+-- View current inventory status
 
-SELECT p.product_name, i.quantity, i.location
-FROM Products p
-JOIN Inventory i ON p.product_id = i.product_id;
+SELECT 
+    p.product_name,
+    i.quantity,
+    i.location
+FROM Inventory i
+JOIN Products p ON i.product_id = p.product_id;
 
-Query 2 — Low Stock Alert
 
-SELECT p.product_name, i.quantity
-FROM Products p
-JOIN Inventory i ON p.product_id = i.product_id
+Query 2 -  Low Stock Alert
+-Identify products with low stock (less than 10 units)
+
+SELECT 
+    p.product_name,
+    i.quantity
+FROM Inventory i
+JOIN Products p ON i.product_id = p.product_id
 WHERE i.quantity < 10;
 
-Query 3 — Total Movement per Product
 
-SELECT product_id, SUM(quantity) AS total_moved
-FROM Movements
-GROUP BY product_id;
+Query 3 - Product Movement History
+-Track all product movements
 
-Query 4 — Recent Movements
+SELECT 
+    p.product_name,
+    m.movement_type,
+    m.quantity,
+    m.movement_date
+FROM Movements m
+JOIN Products p ON m.product_id = p.product_id
+ORDER BY m.movement_date;
 
-SELECT *
-FROM Movements
-ORDER BY movement_date DESC;
 
-Query 5 — Total Stock by Category
+Query 4 - Total Movements Per Product
+-Count how many movements each product has
 
-SELECT p.category, SUM(i.quantity) AS total_stock
+SELECT 
+    p.product_name,
+    COUNT(*) AS total_movements
+FROM Movements m
+JOIN Products p ON m.product_id = p.product_id
+GROUP BY p.product_name
+ORDER BY total_movements DESC;
+
+
+Query 5 - REAL STOCK 
+-Calculate real stock based on movements
+
+SELECT 
+    p.product_name,
+    SUM(CASE 
+        WHEN m.movement_type = 'IN' THEN m.quantity
+        WHEN m.movement_type = 'OUT' THEN -m.quantity
+    END) AS calculated_stock
+FROM Movements m
+JOIN Products p ON m.product_id = p.product_id
+GROUP BY p.product_name;
+
+
+Query 6 - Inventory vs Movement Comparison
+-Compare stored inventory with calculated stock
+
+SELECT 
+    p.product_name,
+    i.quantity AS inventory_stock,
+    COALESCE(SUM(
+        CASE 
+            WHEN m.movement_type = 'IN' THEN m.quantity
+            WHEN m.movement_type = 'OUT' THEN -m.quantity
+        END
+    ), 0) AS calculated_stock
 FROM Products p
-JOIN Inventory i ON p.product_id = i.product_id
-GROUP BY p.category;
+LEFT JOIN Inventory i ON p.product_id = i.product_id
+LEFT JOIN Movements m ON p.product_id = m.product_id
+GROUP BY p.product_name, i.quantity;
