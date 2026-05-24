@@ -10,8 +10,8 @@ CREATE TABLE Products (
 
 
 CREATE TABLE Inventory (
-    product_id INT,
-    quantity INT,
+    product_id INT PRIMARY KEY,
+    quantity INT NOT NULL,
     location VARCHAR(50),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
@@ -19,9 +19,9 @@ CREATE TABLE Inventory (
 CREATE TABLE Movements (
     movement_id INT PRIMARY KEY,
     product_id INT,
-    movement_type VARCHAR(10), -- IN or OUT
-    quantity INT,
-    movement_date DATE,
+    movement_type VARCHAR(10) CHECK (movement_type IN ('IN', 'OUT')),
+    quantity INT NOT NULL,
+    movement_date DATE NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
